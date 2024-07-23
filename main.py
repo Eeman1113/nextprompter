@@ -29,9 +29,9 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
     href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
     return href
 
-st.set_page_config(page_title="Next.js File Collector", page_icon="📁")
+st.set_page_config(page_title="Nextprompter", page_icon="📁")
 
-st.title("Next.js File Collector")
+st.title("次のプロンプター")
 
 st.write("This app allows you to select a Next.js project directory, choose specific .js files (excluding node_modules), and create a formatted output file.")
 
@@ -73,4 +73,3 @@ st.sidebar.info(
     "allows you to select specific files, and generates "
     "a formatted output file with the contents of the selected files."
 )
-st.sidebar.info("Made with ❤️ using Streamlit")
