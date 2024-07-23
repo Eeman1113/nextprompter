@@ -12,8 +12,8 @@ def collect_js_files(path):
                 js_files.append(os.path.join(root, file))
     return js_files
 
-def create_output_file(selected_files, project_path):
-    output = ""
+def create_output_file(selected_files, project_path, user_prompt):
+    output = f"// User Prompt:\n{user_prompt}\n\n"
     for file_path in selected_files:
         relative_path = os.path.relpath(file_path, start=project_path)
         output += f"// File: {relative_path}\n"
@@ -32,8 +32,7 @@ def get_binary_file_downloader_html(bin_file, file_label='File'):
 st.set_page_config(page_title="Nextprompter", page_icon="📁")
 
 st.title("次のプロンプター")
-
-st.write("This app allows you to select a Next.js project directory, choose specific .js files (excluding node_modules), and create a formatted output file.")
+st.write("This app allows you to select a Next.js project directory, choose specific .js files (excluding node_modules), add a custom prompt, and create a formatted output file.")
 
 # Input for project path
 project_path = st.text_input("Enter the path to your Next.js project:")
@@ -51,8 +50,11 @@ if project_path:
         selected_files = st.multiselect("Select .js files to include:", js_files)
         
         if selected_files:
+            # Let user add a custom prompt
+            user_prompt = st.text_area("Enter your custom prompt:", height=100)
+            
             # Create output file
-            output_content = create_output_file(selected_files, project_path)
+            output_content = create_output_file(selected_files, project_path, user_prompt)
             
             # Display preview
             st.subheader("Preview of output file:")
@@ -70,6 +72,6 @@ st.sidebar.title("About")
 st.sidebar.info(
     "This app collects .js files from a Next.js project "
     "(excluding the node_modules folder), "
-    "allows you to select specific files, and generates "
-    "a formatted output file with the contents of the selected files."
+    "allows you to select specific files, add a custom prompt, "
+    "and generates a formatted output file with the contents of the selected files."
 )
